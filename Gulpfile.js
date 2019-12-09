@@ -9,7 +9,7 @@ gulp.task("clean", function(cb) {
 
 gulp.task(
   "build",
-  gulp.parallel("clean", function() {
+  gulp.series("clean", function() {
     return gulp
       .src("src/**/*.js")
       .pipe(babel())
@@ -39,7 +39,7 @@ gulp.task(
 
 gulp.task(
   "preview",
-  gulp.parallel("build", function() {
+  gulp.series("build", function() {
     const buildReporterPlugin = require("testcafe").embeddingUtils
       .buildReporterPlugin;
     const pluginFactory = require("./lib");
