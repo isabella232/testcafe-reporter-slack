@@ -26,7 +26,7 @@ gulp.task(
 
 gulp.task(
   "test",
-  gulp.parallel("build", function() {
+  gulp.series("build", function() {
     return gulp.src("test/**.js").pipe(
       mocha({
         ui: "bdd",

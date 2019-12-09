@@ -1,85 +1,83 @@
-const TestRunErrorFormattableAdapter = require('testcafe').embeddingUtils.TestRunErrorFormattableAdapter;
-const UncaughtErrorOnPage = require('testcafe').embeddingUtils.testRunErrors.UncaughtErrorOnPage;
-const ActionElementNotFoundError = require('testcafe').embeddingUtils.testRunErrors.ActionElementNotFoundError;
-const testCallsite = require('./test-callsite');
-
+const TestRunErrorFormattableAdapter = require("testcafe").embeddingUtils
+  .TestRunErrorFormattableAdapter;
+const UncaughtErrorOnPage = require("testcafe").embeddingUtils.testRunErrors
+  .UncaughtErrorOnPage;
+const ActionElementNotFoundError = require("testcafe").embeddingUtils
+  .testRunErrors.ActionElementNotFoundError;
+const testCallsite = require("./test-callsite");
 
 function makeErrors(errDescrs) {
-  return errDescrs.map(function (descr) {
+  return errDescrs.map(function(descr) {
     return new TestRunErrorFormattableAdapter(descr.err, descr.metaInfo);
   });
 }
 
 module.exports = [
   {
-    method: 'reportTaskStart',
+    method: "reportTaskStart",
     args: [
-      new Date('1970-01-01T00:00:00.000Z'),
-      [
-        'Chrome 41.0.2227 / Mac OS X 10.10.1',
-        'Firefox 47 / Mac OS X 10.10.1'
-      ],
+      new Date("1970-01-01T00:00:00.000Z"),
+      ["Chrome 41.0.2227 / Mac OS X 10.10.1", "Firefox 47 / Mac OS X 10.10.1"],
       6
     ]
   },
   {
-    method: 'reportFixtureStart',
-    args: [
-      'First fixture',
-      './fixture1.js'
-    ]
+    method: "reportFixtureStart",
+    args: ["First fixture", "./fixture1.js"]
   },
   {
-    method: 'reportTestDone',
+    method: "reportTestDone",
     args: [
-      'First test in first fixture',
+      "First test in first fixture",
       {
         errs: [],
         durationMs: 74000,
         unstable: true,
-        screenshotPath: '/screenshots/1445437598847'
+        screenshotPath: "/screenshots/1445437598847"
       }
     ]
   },
   {
-    method: 'reportTestDone',
+    method: "reportTestDone",
     args: [
-      'Second test in first fixture',
+      "Second test in first fixture",
       {
         // errs: [],
         errs: makeErrors([
           {
-
-            err: new UncaughtErrorOnPage('Some error', 'http://example.org'),
+            err: new UncaughtErrorOnPage("Some error", "http://example.org"),
 
             metaInfo: {
-              userAgent: 'Chrome 41.0.2227 / Mac OS X 10.10.1',
-              screenshotPath: '/screenshots/1445437598847/errors',
+              userAgent: "Chrome 41.0.2227 / Mac OS X 10.10.1",
+              screenshotPath: "/screenshots/1445437598847/errors",
               callsite: testCallsite,
-              testRunState: 'inTest'
+              testRunState: "inTest"
             }
           },
           {
-            err: new ActionElementNotFoundError({apiFnChain: ['one', 'two', 'three'], apiFnIndex: 1}),
+            err: new ActionElementNotFoundError({
+              apiFnChain: ["one", "two", "three"],
+              apiFnIndex: 1
+            }),
 
             metaInfo: {
-              userAgent: 'Firefox 47 / Mac OS X 10.10.1',
+              userAgent: "Firefox 47 / Mac OS X 10.10.1",
               callsite: testCallsite,
-              testRunState: 'inTest'
+              testRunState: "inTest"
             }
           }
         ]),
 
         durationMs: 74000,
         unstable: false,
-        screenshotPath: '/screenshots/1445437598847'
+        screenshotPath: "/screenshots/1445437598847"
       }
     ]
   },
   {
-    method: 'reportTestDone',
+    method: "reportTestDone",
     args: [
-      'Third test in first fixture',
+      "Third test in first fixture",
       {
         errs: [],
         durationMs: 74000,
@@ -89,16 +87,13 @@ module.exports = [
     ]
   },
   {
-    method: 'reportFixtureStart',
-    args: [
-      'Second fixture',
-      './fixture2.js'
-    ]
+    method: "reportFixtureStart",
+    args: ["Second fixture", "./fixture2.js"]
   },
   {
-    method: 'reportTestDone',
+    method: "reportTestDone",
     args: [
-      'First test in second fixture',
+      "First test in second fixture",
       {
         errs: [],
         durationMs: 74000,
@@ -108,9 +103,9 @@ module.exports = [
     ]
   },
   {
-    method: 'reportTestDone',
+    method: "reportTestDone",
     args: [
-      'Second test in second fixture',
+      "Second test in second fixture",
       {
         errs: [],
         durationMs: 74000,
@@ -120,9 +115,9 @@ module.exports = [
     ]
   },
   {
-    method: 'reportTestDone',
+    method: "reportTestDone",
     args: [
-      'Third test in second fixture',
+      "Third test in second fixture",
       {
         errs: [],
         durationMs: 0,
@@ -133,26 +128,26 @@ module.exports = [
     ]
   },
   {
-    method: 'reportFixtureStart',
-    args: [
-      'Third fixture',
-      './fixture3.js'
-    ]
+    method: "reportFixtureStart",
+    args: ["Third fixture", "./fixture3.js"]
   },
   {
-    method: 'reportTestDone',
+    method: "reportTestDone",
     args: [
-      'First test in third fixture',
+      "First test in third fixture",
       {
         // errs: [],
         errs: makeErrors([
           {
-            err: new ActionElementNotFoundError({apiFnChain: ['one', 'two', 'three'], apiFnIndex: 1}),
+            err: new ActionElementNotFoundError({
+              apiFnChain: ["one", "two", "three"],
+              apiFnIndex: 1
+            }),
 
             metaInfo: {
-              userAgent: 'Firefox 47 / Mac OS X 10.10.1',
+              userAgent: "Firefox 47 / Mac OS X 10.10.1",
               callsite: testCallsite,
-              testRunState: 'inBeforeEach'
+              testRunState: "inBeforeEach"
             }
           }
         ]),
@@ -164,17 +159,22 @@ module.exports = [
     ]
   },
   {
-    method: 'reportTaskDone',
+    method: "reportTaskDone",
     args: [
-      new Date('1970-01-01T00:15:25.000Z'),
+      new Date("1970-01-01T00:15:25.000Z"),
       6,
       [
-        'Was unable to take a screenshot due to an error.\n\nReferenceError: someVar is not defined',
-        'Was unable to take a screenshot due to an error.\n\nReferenceError: someOtherVar is not defined',
-        'Was unable to take screenshots because the screenshot directory is not specified. ' +
-        'To specify it, use the "-s" or "--screenshots" command line option or the ' +
-        '"screenshots" method of the test runner in case you are using API.'
-      ]
+        "Was unable to take a screenshot due to an error.\n\nReferenceError: someVar is not defined",
+        "Was unable to take a screenshot due to an error.\n\nReferenceError: someOtherVar is not defined",
+        "Was unable to take screenshots because the screenshot directory is not specified. " +
+          'To specify it, use the "-s" or "--screenshots" command line option or the ' +
+          '"screenshots" method of the test runner in case you are using API.'
+      ],
+      {
+        passedCount: 2,
+        failedCount: 1,
+        skippedCount: 1
+      }
     ]
   }
 ];

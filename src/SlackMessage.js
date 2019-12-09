@@ -19,13 +19,30 @@ export default class SlackMessage {
     this.errorMessages.push(message);
   }
 
+  convertTextToBlock(text) {
+    return {
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text
+          }
+        }
+      ]
+    };
+  }
+
   sendMessage(message, slackProperties = null) {
+    let formattedMessage =
+      typeof message === "string" ? this.convertTextToBlock(message) : message;
+
     this.slack.webhook(
       Object.assign(
         {
           channel: config.channel,
           username: config.username,
-          ...message
+          ...formattedMessage
         },
         slackProperties
       ),
@@ -36,7 +53,11 @@ export default class SlackMessage {
             console.log(response);
           } else {
             console.log(
-              `The following message is send to slack: \n ${message}`
+              `The following message is send to slack: \n ${JSON.stringify(
+                formattedMessage,
+                undefined,
+                2
+              )}`
             );
           }
         }
@@ -61,7 +82,17 @@ export default class SlackMessage {
   }
 
   getTestReportMessage() {
-    let message = { text: this.getSlackMessage(), blocks: [] };
+    let message = {
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: this.getSlackMessage()
+          }
+        }
+      ]
+    };
     let errorMessage = this.getErrorMessage();
 
     if (errorMessage.length > 0 && this.loggingLevel === loggingLevels.TEST) {
