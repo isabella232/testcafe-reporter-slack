@@ -4,11 +4,11 @@
   "description": "TestCafe slack reporter plugin.",
   "repository": {
     "type": "git",
-    "url": "git@github.com:Shafied/testcafe-reporter-slack.git"
+    "url": "git@github.com:confluentinc/testcafe-reporter-slack.git"
   },
   "author": {
-    "name": "Shafied",
-    "email": "shafiedn@gmail.com"
+    "name": "confluentinc",
+    "email": "jmansor@confluent.io"
   },
   "main": "lib/index",
   "files": [
