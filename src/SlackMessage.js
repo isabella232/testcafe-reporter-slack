@@ -1,11 +1,10 @@
 import config from "./config";
 import loggingLevels from "./const/LoggingLevels";
+const { IncomingWebhook } = require("@slack/webhook");
 
 export default class SlackMessage {
   constructor() {
-    let slackNode = require("slack-node");
-    this.slack = new slackNode();
-    this.slack.setWebhook(config.webhookUrl);
+    this.slack = new IncomingWebhook(config.webhookUrl);
     this.loggingLevel = config.loggingLevel;
     this.messages = [];
     this.errorMessages = [];
@@ -37,32 +36,32 @@ export default class SlackMessage {
     let formattedMessage =
       typeof message === "string" ? this.convertTextToBlock(message) : message;
 
-    this.slack.webhook(
-      Object.assign(
-        {
-          channel: config.channel,
-          username: config.username,
-          ...formattedMessage
-        },
-        slackProperties
-      ),
-      function(err, response) {
+    this.slack
+      .send(
+        Object.assign(
+          {
+            channel: config.channel,
+            username: config.username,
+            ...formattedMessage
+          },
+          slackProperties
+        )
+      )
+      .then(response => {
         if (!config.quietMode) {
-          if (err) {
-            console.log("Unable to send a message to slack");
-            console.log(response);
-          } else {
-            console.log(
-              `The following message is send to slack: \n ${JSON.stringify(
-                formattedMessage,
-                undefined,
-                2
-              )}`
-            );
-          }
+          console.log(
+            `The following message is send to slack: \n ${JSON.stringify(
+              formattedMessage,
+              undefined,
+              2
+            )}`
+          );
         }
-      }
-    );
+      })
+      .catch(err => {
+        console.log("Unable to send a message to slack");
+        console.log(err);
+      });
   }
 
   sendTestReport(nrFailedTests) {

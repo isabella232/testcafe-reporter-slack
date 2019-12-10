@@ -28,6 +28,7 @@
     "plugin"
   ],
   "devDependencies": {
+    "axios-mock-adapter": "^1.17.0",
     "callsite-record": "^3.2.0",
     "del": "^1.2.0",
     "gulp-babel": "^5.2.1",
@@ -38,8 +39,8 @@
     "testcafe": "^0.2.0-alpha"
   },
   "dependencies": {
+    "@slack/webhook": "^5.0.2",
     "dotenv": "^7.0.0",
-    "gulp": "^4.0.2",
-    "slack-node": "^0.1.8"
+    "gulp": "^4.0.2"
   }
 }
