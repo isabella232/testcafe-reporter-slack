@@ -92,23 +92,22 @@ export default class SlackMessage {
         }
       ]
     };
-    let errorMessage = this.getErrorMessage();
 
-    if (errorMessage.length > 0 && this.loggingLevel === loggingLevels.TEST) {
-      message.blocks.push({
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: "\n\n\n```" + this.getErrorMessage() + "```"
-        }
-      });
+    if (this.loggingLevel === loggingLevels.TEST) {
+      message.blocks = message.blocks.concat(this.getErrorMessageBlocks());
     }
 
     return message;
   }
 
-  getErrorMessage() {
-    return this.errorMessages.join("\n\n\n");
+  getErrorMessageBlocks() {
+    return this.errorMessages.map(err => ({
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: "\n\n\n```" + err + "```"
+      }
+    }));
   }
 
   getSlackMessage() {
